@@ -36,35 +36,35 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     private func shoot() {
         let node = SCNNode()
         
-        let sphere = SCNSphere(radius: 0.025)
-        node.geometry = sphere
-        let shape = SCNPhysicsShape(geometry: sphere, options: nil)
+        let box = SCNBox(width: 0.1, height: 0.1, length: 5, chamferRadius: 0)
+        box.firstMaterial?.diffuse.contents = UIColor.red
+        box.firstMaterial?.lightingModel = .constant
+        
+        node.geometry = box
+        node.opacity = 0.5
+
+        let shape = SCNPhysicsShape(geometry: box, options: nil)
         node.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
         node.physicsBody?.isAffectedByGravity = false
         
-        let (direction, position) = self.getUserVector()
-        node.position = position // SceneKit/AR coordinates are in meters
-        
-        let bulletDirection = direction
-        node.physicsBody?.applyForce(bulletDirection, asImpulse: true)
-        sceneView.scene.rootNode.addChildNode(node)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            node.removeFromParentNode()
+        if let pov = sceneView.pointOfView {
+            node.position = pov.position
+            node.position.y -= 0.5
+            node.eulerAngles = pov.eulerAngles
         }
-    }
-    
-    func getUserVector() -> (SCNVector3, SCNVector3) { // (direction, position)
+        
         if let frame = self.sceneView.session.currentFrame {
             let mat = SCNMatrix4(frame.camera.transform) // 4x4 transform matrix describing camera in world space
             let speed:Float = -5
             let dir = SCNVector3(speed * mat.m31, speed * mat.m32, speed * mat.m33) // orientation of camera in world space
-            
-            let pos = SCNVector3(mat.m41, mat.m42, mat.m43) // location of camera in world space
-            
-            return (dir, pos)
+            node.physicsBody?.applyForce(dir, asImpulse: true)
         }
-        return (SCNVector3(0, 0, -1), SCNVector3(0, 0, -0.2))
+        
+        sceneView.scene.rootNode.addChildNode(node)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            node.removeFromParentNode()
+        }
     }
     
     private var fighterClone: SCNNode?
