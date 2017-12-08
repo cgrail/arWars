@@ -13,6 +13,9 @@
 		0E0A154C1FD98D2B004A6065 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E0A154A1FD98D2B004A6065 /* Main.storyboard */; };
 		0E0A154E1FD98D2B004A6065 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E0A154D1FD98D2B004A6065 /* Assets.xcassets */; };
 		0E0A15511FD98D2B004A6065 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E0A154F1FD98D2B004A6065 /* LaunchScreen.storyboard */; };
+		0ED3909F1FDAFCB400CC1B0B /* Explode.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 0ED3909E1FDAFCB400CC1B0B /* Explode.scnp */; };
+		0ED390A11FDAFDB100CC1B0B /* Laser.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0ED390A01FDAFDB100CC1B0B /* Laser.mp3 */; };
+		0ED390A51FDB00D100CC1B0B /* Explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0ED390A41FDB00D100CC1B0B /* Explosion.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		0E0A154D1FD98D2B004A6065 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E0A15501FD98D2B004A6065 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E0A15521FD98D2B004A6065 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0ED3909E1FDAFCB400CC1B0B /* Explode.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = Explode.scnp; sourceTree = "<group>"; };
+		0ED390A01FDAFDB100CC1B0B /* Laser.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Laser.mp3; sourceTree = "<group>"; };
+		0ED390A41FDB00D100CC1B0B /* Explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Explosion.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +46,8 @@
 		0E0A15381FD98D2B004A6065 = {
 			isa = PBXGroup;
 			children = (
+				0ED390A01FDAFDB100CC1B0B /* Laser.mp3 */,
+				0ED390A41FDB00D100CC1B0B /* Explosion.mp3 */,
 				0E0A15431FD98D2B004A6065 /* ARWars */,
 				0E0A15421FD98D2B004A6065 /* Products */,
 			);
@@ -59,6 +67,7 @@
 				0E0A15441FD98D2B004A6065 /* AppDelegate.swift */,
 				0E0A15461FD98D2B004A6065 /* art.scnassets */,
 				0E0A15481FD98D2B004A6065 /* ViewController.swift */,
+				0ED3909E1FDAFCB400CC1B0B /* Explode.scnp */,
 				0E0A154A1FD98D2B004A6065 /* Main.storyboard */,
 				0E0A154D1FD98D2B004A6065 /* Assets.xcassets */,
 				0E0A154F1FD98D2B004A6065 /* LaunchScreen.storyboard */,
@@ -129,7 +138,10 @@
 				0E0A15471FD98D2B004A6065 /* art.scnassets in Resources */,
 				0E0A15511FD98D2B004A6065 /* LaunchScreen.storyboard in Resources */,
 				0E0A154E1FD98D2B004A6065 /* Assets.xcassets in Resources */,
+				0ED390A51FDB00D100CC1B0B /* Explosion.mp3 in Resources */,
 				0E0A154C1FD98D2B004A6065 /* Main.storyboard in Resources */,
+				0ED3909F1FDAFCB400CC1B0B /* Explode.scnp in Resources */,
+				0ED390A11FDAFDB100CC1B0B /* Laser.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
