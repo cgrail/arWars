@@ -14,37 +14,44 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
+    private var tieFighter: SCNNode?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let scene = SCNScene()
+        loadTieFigher()
         
-        addNewShip()
-        
-        // Set the scene to the view
-        sceneView.scene = scene
+        sceneView.scene = SCNScene()
+        sceneView.autoenablesDefaultLighting = true
     }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        addNewShip()
+        self.addNewTieFigher()
     }
     
+    private var fighterClone: SCNNode?
     
-    func addNewShip() {
-        let cube = SCNSphere(radius: 0.1)
-        let cubeNode = SCNNode(geometry: cube)
-        cubeNode.opacity = 0.5
-        
-        let posX = floatBetween(-0.5, and: 0.5)
-        let posY = floatBetween(-0.5, and: 0.5  )
-        cubeNode.position = SCNVector3(posX, posY, -1) // SceneKit/AR coordinates are in meters
-        sceneView.scene.rootNode.addChildNode(cubeNode)
+    func addNewTieFigher() {
+        self.fighterClone?.removeFromParentNode()
+        if let fighter = tieFighter?.clone() {
+            let posX = floatBetween(-1, and: 1)
+            let posY = floatBetween(-1, and: 1)
+            fighter.position = SCNVector3(posX, posY, -1) // SceneKit/AR coordinates are in meters
+            sceneView.scene.rootNode.addChildNode(fighter)
+            self.fighterClone = fighter
+        }
+    }
+    
+    func loadTieFigher() {
+        if let scene = SCNScene(named: "art.scnassets/Tie.scn") {
+            tieFighter = scene.rootNode.childNodes[0]
+        }
     }
     
     func floatBetween(_ first: Float,  and second: Float) -> Float { // random float between upper and lower bound (inclusive)
         return (Float(arc4random()) / Float(UInt32.max)) * (first - second) + second
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
