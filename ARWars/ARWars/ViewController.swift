@@ -22,6 +22,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         sceneView.scene = SCNScene()
         sceneView.scene.physicsWorld.contactDelegate = self
         sceneView.autoenablesDefaultLighting = true
+
+        addNewTieFigher()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -47,17 +49,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
     private func createLaser() -> SCNNode {
 
         let node = SCNNode()
@@ -80,19 +71,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         return node
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     private func addPhysics(_ laser: SCNNode) {
         let shape = SCNPhysicsShape(geometry: laser.geometry!, options: nil)
         laser.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
@@ -101,19 +79,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         laser.physicsBody?.contactTestBitMask = CollisionCategory.fighter.rawValue
         laser.physicsBody?.collisionBitMask = CollisionCategory.fighter.rawValue
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private func animateLaser(_ laser:SCNNode) {
         guard let frame = self.sceneView.session.currentFrame else {
