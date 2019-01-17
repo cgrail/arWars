@@ -90,18 +90,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         laser.physicsBody?.applyForce(direction, asImpulse: true)
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     private func addNewTieFigher() {
         let fighter = assets.tieFighter.clone()
         let posX = Float.random(in: -1...1)
@@ -115,21 +103,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         fighter.physicsBody?.contactTestBitMask = CollisionCategory.laser.rawValue
 
         sceneView.scene.rootNode.addChildNode(fighter)
+        animateFighter(fighter)
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private func animateFighter(_ fighter: SCNNode) {
         var targetPosition = fighter.position
