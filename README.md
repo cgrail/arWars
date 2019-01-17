@@ -13,9 +13,24 @@ Checkout commit ["Initial version"](https://github.com/cgrail/arWars/tree/initia
 ### [Step 1: Create laser](https://github.com/cgrail/arWars/commit/bab6a9c568155e8466d57390c8e32206edb3bc31)
 
 ```swift
- override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-      let laser = createLaser()
-  }
+override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+ let node = SCNNode()
+
+ let box = SCNBox(width: 0.1, height: 0.1, length: 2, chamferRadius: 0)
+ box.firstMaterial?.diffuse.contents = UIColor.red
+ box.firstMaterial?.lightingModel = .constant
+
+ node.geometry = box
+ node.opacity = 0.5
+
+ if let pov = sceneView.pointOfView {
+     node.position = pov.position
+     node.position.y -= 0.3
+     node.eulerAngles = pov.eulerAngles
+ }
+
+ sceneView.scene.rootNode.addChildNode(node)
+}
 ```
 
 See: 
