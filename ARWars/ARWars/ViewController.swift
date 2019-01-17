@@ -39,6 +39,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let laser = createLaser()
+        addPhysics(laser)
+        animateLaser(laser)
     }
 
 
@@ -109,7 +111,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
 
 
-    private func applyForce(_ laser:SCNNode) {
+    private func animateLaser(_ laser:SCNNode) {
         guard let frame = self.sceneView.session.currentFrame else {
             return
         }
