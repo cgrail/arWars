@@ -10,20 +10,11 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate, AVAudioPlayerDelegate {
-
-    enum SoundEffect: String {
-        case laser = "Laser"
-        case explosion = "Explosion"
-    }
+class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
 
-    private var tieFighter: SCNNode = SCNScene(named: "art.scnassets/Tie.scn")!.rootNode.childNodes[0]
-    private var fighterClone: SCNNode?
-    private var audioPlayers = Set<AVAudioPlayer>()
-
-    // MARK: - Controller Life Cycle
+    private var assets = GameAssets()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,19 +43,25 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         shoot()
     }
 
-    // MARK: - SCNPhysicsContactDelegate
+
+    private func shoot() {
+        let laser = createLaser()
+        addPhysics(laser)
+        applyForce(laser)
+        assets.playSoundEffect(ofType: .laser)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            laser.removeFromParentNode()
+        }
+    }
+
 
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         guard contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue
             || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue else { return }
 
-        playSoundEffect(ofType: .explosion)
-
-        let particleSystem = SCNParticleSystem(named: "Explode", inDirectory: nil)!
-        let systemNode = SCNNode()
-        systemNode.addParticleSystem(particleSystem)
-        systemNode.position = contact.nodeA.position
-        sceneView.scene.rootNode.addChildNode(systemNode)
+        assets.playSoundEffect(ofType: .explosion)
+        createExplosion(contact.nodeA.position)
 
         contact.nodeA.removeFromParentNode()
         contact.nodeB.removeFromParentNode()
@@ -74,58 +71,60 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         }
     }
 
-    // MARK: - AVAudioPlayerDelegate
-
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        audioPlayers.remove(player)
+    private func createExplosion(_ postion: SCNVector3) {
+        let particleSystem = SCNParticleSystem(named: "Explode", inDirectory: nil)!
+        let systemNode = SCNNode()
+        systemNode.addParticleSystem(particleSystem)
+        systemNode.position = postion
+        sceneView.scene.rootNode.addChildNode(systemNode)
     }
 
-    // MARK: - Private Methods
-
-    private func shoot() {
-        playSoundEffect(ofType: .laser)
+    private func createLaser() -> SCNNode {
 
         let node = SCNNode()
 
-        let box = SCNBox(width: 0.1, height: 0.1, length: 1, chamferRadius: 0)
+        let box = SCNBox(width: 0.1, height: 0.1, length: 2, chamferRadius: 0)
         box.firstMaterial?.diffuse.contents = UIColor.red
         box.firstMaterial?.lightingModel = .constant
 
         node.geometry = box
         node.opacity = 0.5
 
-        let shape = SCNPhysicsShape(geometry: box, options: nil)
-        node.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
-        node.physicsBody?.isAffectedByGravity = false
-        node.physicsBody?.categoryBitMask = CollisionCategory.laser.rawValue
-        node.physicsBody?.contactTestBitMask = CollisionCategory.fighter.rawValue
-
         if let pov = sceneView.pointOfView {
             node.position = pov.position
+            node.position.y -= 0.3
             node.eulerAngles = pov.eulerAngles
-        }
-
-        if let frame = self.sceneView.session.currentFrame {
-            let matrix = SCNMatrix4(frame.camera.transform) // 4x4 transform matrix describing camera in world space
-            let speed: Float = -5
-            let direction = SCNVector3(speed * matrix.m31, speed * matrix.m32, speed * matrix.m33) // orientation of camera in world space
-            node.physicsBody?.applyForce(direction, asImpulse: true)
         }
 
         sceneView.scene.rootNode.addChildNode(node)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            node.removeFromParentNode()
+        return node
+    }
+
+    private func addPhysics(_ laser: SCNNode) {
+        let shape = SCNPhysicsShape(geometry: laser.geometry!, options: nil)
+        laser.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
+        laser.physicsBody?.isAffectedByGravity = false
+        laser.physicsBody?.categoryBitMask = CollisionCategory.laser.rawValue
+        laser.physicsBody?.contactTestBitMask = CollisionCategory.fighter.rawValue
+        laser.physicsBody?.collisionBitMask = CollisionCategory.fighter.rawValue
+    }
+
+    private func applyForce(_ laser:SCNNode) {
+        guard let frame = self.sceneView.session.currentFrame else {
+            return
         }
+        let matrix = SCNMatrix4(frame.camera.transform)
+        let speed: Float = -5
+        let direction = SCNVector3(speed * matrix.m31, speed * matrix.m32, speed * matrix.m33)
+        laser.physicsBody?.applyForce(direction, asImpulse: true)
     }
 
     private func addNewTieFigher() {
-        self.fighterClone?.removeFromParentNode()
-        let fighter = tieFighter.clone()
+        let fighter = assets.tieFighter.clone()
         let posX = Float.random(in: -1...1)
         let posY = Float.random(in: -1...1)
-        var targetPosition = SCNVector3(posX, posY, -10)
-        fighter.position = targetPosition
+        fighter.position = SCNVector3(posX, posY, -10)
 
         fighter.physicsBody = SCNPhysicsBody.dynamic()
         fighter.physicsBody?.isAffectedByGravity = false
@@ -133,39 +132,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         fighter.physicsBody?.categoryBitMask = CollisionCategory.fighter.rawValue
         fighter.physicsBody?.contactTestBitMask = CollisionCategory.laser.rawValue
 
+        sceneView.scene.rootNode.addChildNode(fighter)
+
+        animateFighter(fighter)
+    }
+
+    private func animateFighter(_ fighter: SCNNode) {
+        var targetPosition = fighter.position
         targetPosition.z = -1
         let action = SCNAction.move(to: targetPosition, duration: 1)
         action.timingMode = .easeInEaseOut
         fighter.runAction(action)
         fighter.opacity = 0
         fighter.runAction(SCNAction.fadeOpacity(to: 1, duration: 1))
-
-        sceneView.scene.rootNode.addChildNode(fighter)
-        self.fighterClone = fighter
     }
 
-    private func playSoundEffect(ofType effect: SoundEffect) {
-        let player: AVAudioPlayer
-        switch effect {
-        case .explosion: player = playerForSoundEffect(.explosion)
-        case .laser: player = playerForSoundEffect(.laser)
-        }
-
-        player.play()
-        audioPlayers.insert(player)
-    }
-
-    private func playerForSoundEffect(_ soundEffect: SoundEffect) -> AVAudioPlayer {
-        let player = try! AVAudioPlayer(contentsOf: Bundle.main.url(forResource: soundEffect.rawValue, withExtension: "mp3")!)
-        player.delegate = self
-        return player
-    }
-
-}
-
-struct CollisionCategory: OptionSet {
-    let rawValue: Int
-
-    static let laser  = CollisionCategory(rawValue: 1 << 0)
-    static let fighter = CollisionCategory(rawValue: 1 << 1)
 }

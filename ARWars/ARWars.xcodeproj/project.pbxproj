@@ -16,6 +16,7 @@
 		0ED3909F1FDAFCB400CC1B0B /* Explode.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 0ED3909E1FDAFCB400CC1B0B /* Explode.scnp */; };
 		0ED390A11FDAFDB100CC1B0B /* Laser.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0ED390A01FDAFDB100CC1B0B /* Laser.mp3 */; };
 		0ED390A51FDB00D100CC1B0B /* Explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0ED390A41FDB00D100CC1B0B /* Explosion.mp3 */; };
+		0EFC4FD921F0D631002E50DE /* GameAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFC4FD821F0D631002E50DE /* GameAssets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		0ED3909E1FDAFCB400CC1B0B /* Explode.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = Explode.scnp; sourceTree = "<group>"; };
 		0ED390A01FDAFDB100CC1B0B /* Laser.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Laser.mp3; sourceTree = "<group>"; };
 		0ED390A41FDB00D100CC1B0B /* Explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Explosion.mp3; sourceTree = "<group>"; };
+		0EFC4FD821F0D631002E50DE /* GameAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAssets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,8 +48,6 @@
 		0E0A15381FD98D2B004A6065 = {
 			isa = PBXGroup;
 			children = (
-				0ED390A01FDAFDB100CC1B0B /* Laser.mp3 */,
-				0ED390A41FDB00D100CC1B0B /* Explosion.mp3 */,
 				0E0A15431FD98D2B004A6065 /* ARWars */,
 				0E0A15421FD98D2B004A6065 /* Products */,
 			);
@@ -64,16 +64,27 @@
 		0E0A15431FD98D2B004A6065 /* ARWars */ = {
 			isa = PBXGroup;
 			children = (
+				0EFC4FD721F0C395002E50DE /* Assets */,
 				0E0A15441FD98D2B004A6065 /* AppDelegate.swift */,
 				0E0A15461FD98D2B004A6065 /* art.scnassets */,
 				0E0A15481FD98D2B004A6065 /* ViewController.swift */,
-				0ED3909E1FDAFCB400CC1B0B /* Explode.scnp */,
 				0E0A154A1FD98D2B004A6065 /* Main.storyboard */,
 				0E0A154D1FD98D2B004A6065 /* Assets.xcassets */,
 				0E0A154F1FD98D2B004A6065 /* LaunchScreen.storyboard */,
 				0E0A15521FD98D2B004A6065 /* Info.plist */,
+				0EFC4FD821F0D631002E50DE /* GameAssets.swift */,
 			);
 			path = ARWars;
+			sourceTree = "<group>";
+		};
+		0EFC4FD721F0C395002E50DE /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				0ED390A01FDAFDB100CC1B0B /* Laser.mp3 */,
+				0ED390A41FDB00D100CC1B0B /* Explosion.mp3 */,
+				0ED3909E1FDAFCB400CC1B0B /* Explode.scnp */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EFC4FD921F0D631002E50DE /* GameAssets.swift in Sources */,
 				0E0A15491FD98D2B004A6065 /* ViewController.swift in Sources */,
 				0E0A15451FD98D2B004A6065 /* AppDelegate.swift in Sources */,
 			);
@@ -296,7 +308,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = SWR98KT795;
+				DEVELOPMENT_TEAM = 3Z7QAPFM7G;
 				INFOPLIST_FILE = ARWars/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = grail.ARWars;
@@ -311,7 +323,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = SWR98KT795;
+				DEVELOPMENT_TEAM = 3Z7QAPFM7G;
 				INFOPLIST_FILE = ARWars/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = grail.ARWars;
