@@ -26,7 +26,7 @@ See:
 override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
   ...
   addPhysics(laser)
-  applyForce(laser)
+  animateLaser(laser)
 }
 ```
 
@@ -55,14 +55,14 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 ```swift
 override func viewDidLoad() {
   ...
-  addNewTieFigher()
+  addNewTieFighter()
 }
 ```
 
 ### [Step 6: Animate TIE fighter](https://github.com/cgrail/arWars/commit/01c16880540fced936e052ead752186f8c8f8d3c)
 
 ```swift
-private func addNewTieFigher() {
+private func addNewTieFighter() {
   ...
   animateFighter(fighter)
 }
