@@ -42,6 +42,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         addPhysics(laser)
         applyForce(laser)
         assets.playSoundEffect(ofType: .laser)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            laser.removeFromParentNode()
+        }
     }
 
     private func createLaser() -> SCNNode {
