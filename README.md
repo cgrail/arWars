@@ -54,13 +54,8 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
 ```swift
 override func viewDidLoad() {
-    super.viewDidLoad()
-
-    sceneView.scene = SCNScene()
-    sceneView.scene.physicsWorld.contactDelegate = self
-    sceneView.autoenablesDefaultLighting = true
-
-    addNewTieFigher()
+  ...
+  addNewTieFigher()
 }
 ```
 
@@ -77,11 +72,9 @@ private func addNewTieFigher() {
 
 ```swift
 func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-    guard contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue
-        || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue else { return }
-
-    contact.nodeA.removeFromParentNode()
-    contact.nodeB.removeFromParentNode()
+  ...
+  contact.nodeA.removeFromParentNode()
+  contact.nodeB.removeFromParentNode()
 }
 ```
 
