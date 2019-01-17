@@ -8,9 +8,9 @@ It is based on ARKit and demonstrates general 3D development basics, SceneKit, l
 
 ## Step by Step Guide
 
-Checkout commit ["Initial version"](https://github.com/cgrail/arWars/commit/d1189323fed15922fa9789b91aca61f35e116a89) 
+Checkout commit ["Initial version"](https://github.com/cgrail/arWars/tree/initialVersion) 
 
-### Step 1: Create laser
+### [Step 1: Create laser](https://github.com/cgrail/arWars/commit/bab6a9c568155e8466d57390c8e32206edb3bc31)
 
 ```swift
  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -18,17 +18,19 @@ Checkout commit ["Initial version"](https://github.com/cgrail/arWars/commit/d118
   }
 ```
 
-### Step 2: Add physics and animate laser
+See: 
+
+### [Step 2: Add physics and animate laser](https://github.com/cgrail/arWars/commit/d8da99443f372867cb8cb8762e7c141d0392815a)
 
 ```swift
 override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
   ...
   addPhysics(laser)
-  animateLaser(laser)
+  applyForce(laser)
 }
 ```
 
-### Step 3: Play laser sound
+### [Step 3: Play laser sound](https://github.com/cgrail/arWars/commit/2547cb1f04b890de450d38058cee493b251338a7)
 
 ```swift
 override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -37,7 +39,7 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 }
 ```
 
-### Step 4: Make laser disappear after 1 second
+### [Step 4: Make laser disappear after 1 second](https://github.com/cgrail/arWars/commit/f63f933790403853f7df3808bc3ceccb9e7b3c03)
 
 ```swift
 override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -62,7 +64,7 @@ override func viewDidLoad() {
 }
 ```
 
-### Step 6: Animate TIE fighter
+### [Step 6: Animate TIE fighter](https://github.com/cgrail/arWars/commit/01c16880540fced936e052ead752186f8c8f8d3c)
 
 ```swift
 private func addNewTieFigher() {
@@ -71,7 +73,7 @@ private func addNewTieFigher() {
 }
 ```
 
-### Step 7: Implement physics contact
+### [Step 7: Remove 3D objects on contact](https://github.com/cgrail/arWars/commit/e8750c9769cf0c328fcc616b4172d5406cf3a9f4)
 
 ```swift
 func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
@@ -83,7 +85,7 @@ func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact)
 }
 ```
 
-### Step 8: Play explosion animation and sound
+### [Step 8: Play explosion animation and sound](https://github.com/cgrail/arWars/commit/759392f7bf116034f2c0dabeef6c3b8701787ca6)
 
 ```swift
 func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
@@ -93,7 +95,7 @@ func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact)
 }
 ```
 
-### Step 9: Spawn new TIE Fighter
+### [Step 9: Spawn new TIE Fighter](https://github.com/cgrail/arWars/commit/f19d9dc4f50fe150e36f557aedfa75a8631a4ccc)
 
 ```swift
 func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
