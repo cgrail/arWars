@@ -124,6 +124,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         contact.nodeB.removeFromParentNode()
         assets.playSoundEffect(ofType: .explosion)
         createExplosion(contact.nodeA.position)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.addNewTieFigher()
+        }
     }
 
     private func createExplosion(_ postion: SCNVector3) {
