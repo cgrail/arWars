@@ -38,19 +38,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let laser = createLaser()
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
     private func createLaser() -> SCNNode {
 
