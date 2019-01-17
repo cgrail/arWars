@@ -118,19 +118,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         fighter.runAction(SCNAction.fadeOpacity(to: 1, duration: 1))
     }
 
-
-
-
-
-
-
-
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         guard contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue
             || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue else { return }
 
         contact.nodeA.removeFromParentNode()
         contact.nodeB.removeFromParentNode()
+
+        assets.playSoundEffect(ofType: .explosion)
+        createExplosion(contact.nodeA.position)
 
     }
 
