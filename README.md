@@ -50,7 +50,7 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 }
 ```
 
-### Step 5: Add new TIE Fighter
+### [Step 5: Add new TIE Fighter](https://github.com/cgrail/arWars/commit/7e770ec4836305a94c5bbd2556b89312a6766918)
 
 ```swift
 override func viewDidLoad() {
