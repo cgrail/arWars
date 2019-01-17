@@ -22,6 +22,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         sceneView.scene = SCNScene()
         sceneView.scene.physicsWorld.contactDelegate = self
         sceneView.autoenablesDefaultLighting = true
+
+        addNewTieFigher()
     }
 
     override func viewWillAppear(_ animated: Bool) {
