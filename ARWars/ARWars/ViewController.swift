@@ -39,6 +39,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let laser = createLaser()
+        addPhysics(laser)
+        applyForce(laser)
 
     }
 
@@ -64,19 +66,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         return node
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     private func addPhysics(_ laser: SCNNode) {
         let shape = SCNPhysicsShape(geometry: laser.geometry!, options: nil)
         laser.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
@@ -85,19 +74,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         laser.physicsBody?.contactTestBitMask = CollisionCategory.fighter.rawValue
         laser.physicsBody?.collisionBitMask = CollisionCategory.fighter.rawValue
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private func applyForce(_ laser:SCNNode) {
         guard let frame = self.sceneView.session.currentFrame else {
