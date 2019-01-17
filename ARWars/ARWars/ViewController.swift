@@ -41,6 +41,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         let laser = createLaser()
         addPhysics(laser)
         animateLaser(laser)
+        assets.playSoundEffect(ofType: .laser)
     }
 
 
