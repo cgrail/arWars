@@ -109,7 +109,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
 
 
-    private func applyForce(_ laser:SCNNode) {
+    private func animateLaser(_ laser:SCNNode) {
         guard let frame = self.sceneView.session.currentFrame else {
             return
         }
@@ -131,7 +131,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
 
 
-    private func addNewTieFigher() {
+    private func addNewTieFighter() {
         let fighter = assets.tieFighter.clone()
         let posX = Float.random(in: -1...1)
         let posY = Float.random(in: -1...1)
