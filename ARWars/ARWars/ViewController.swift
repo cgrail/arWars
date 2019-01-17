@@ -127,6 +127,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         guard contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue
             || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue else { return }
+        contact.nodeA.removeFromParentNode()
+        contact.nodeB.removeFromParentNode()
     }
 
 
