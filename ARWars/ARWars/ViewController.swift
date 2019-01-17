@@ -22,8 +22,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         sceneView.scene = SCNScene()
         sceneView.scene.physicsWorld.contactDelegate = self
         sceneView.autoenablesDefaultLighting = true
-
-        addNewTieFigher()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -40,44 +38,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        shoot()
+
     }
 
 
-    private func shoot() {
-        let laser = createLaser()
-        addPhysics(laser)
-        applyForce(laser)
-        assets.playSoundEffect(ofType: .laser)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            laser.removeFromParentNode()
-        }
-    }
 
 
-    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        guard contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue
-            || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue else { return }
 
-        assets.playSoundEffect(ofType: .explosion)
-        createExplosion(contact.nodeA.position)
 
-        contact.nodeA.removeFromParentNode()
-        contact.nodeB.removeFromParentNode()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.addNewTieFigher()
-        }
-    }
 
-    private func createExplosion(_ postion: SCNVector3) {
-        let particleSystem = SCNParticleSystem(named: "Explode", inDirectory: nil)!
-        let systemNode = SCNNode()
-        systemNode.addParticleSystem(particleSystem)
-        systemNode.position = postion
-        sceneView.scene.rootNode.addChildNode(systemNode)
-    }
+
+
+
 
     private func createLaser() -> SCNNode {
 
@@ -101,6 +74,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         return node
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     private func addPhysics(_ laser: SCNNode) {
         let shape = SCNPhysicsShape(geometry: laser.geometry!, options: nil)
         laser.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
@@ -109,6 +95,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         laser.physicsBody?.contactTestBitMask = CollisionCategory.fighter.rawValue
         laser.physicsBody?.collisionBitMask = CollisionCategory.fighter.rawValue
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private func applyForce(_ laser:SCNNode) {
         guard let frame = self.sceneView.session.currentFrame else {
@@ -119,6 +118,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         let direction = SCNVector3(speed * matrix.m31, speed * matrix.m32, speed * matrix.m33)
         laser.physicsBody?.applyForce(direction, asImpulse: true)
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private func addNewTieFigher() {
         let fighter = assets.tieFighter.clone()
@@ -134,8 +145,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
         sceneView.scene.rootNode.addChildNode(fighter)
 
-        animateFighter(fighter)
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private func animateFighter(_ fighter: SCNNode) {
         var targetPosition = fighter.position
@@ -145,6 +168,43 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         fighter.runAction(action)
         fighter.opacity = 0
         fighter.runAction(SCNAction.fadeOpacity(to: 1, duration: 1))
+    }
+
+
+
+
+
+
+
+
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        guard contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue
+            || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.fighter.rawValue else { return }
+
+        contact.nodeA.removeFromParentNode()
+        contact.nodeB.removeFromParentNode()
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    private func createExplosion(_ postion: SCNVector3) {
+        let particleSystem = SCNParticleSystem(named: "Explode", inDirectory: nil)!
+        let systemNode = SCNNode()
+        systemNode.addParticleSystem(particleSystem)
+        systemNode.position = postion
+        sceneView.scene.rootNode.addChildNode(systemNode)
     }
 
 }
